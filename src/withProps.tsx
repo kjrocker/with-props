@@ -12,3 +12,5 @@ const withProps = <P, R>(mapPropsBase: (p?: P) => R) => {
     return Component;
   };
 };
+
+export default withProps;
