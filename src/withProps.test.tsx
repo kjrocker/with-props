@@ -1,7 +1,10 @@
-import { shallow } from 'enzyme';
+import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
 import sinon from 'sinon';
 import withProps from './withProps';
+
+configure({ adapter: new Adapter() as any });
 
 const BaseDiv: React.ComponentType<any> = (props) => <div {...props} />;
 
@@ -52,7 +55,7 @@ describe('when mapProps doesnt depend on props', () => {
 });
 
 describe('when mapProps depends on props', () => {
-  const setClass = ({ primary }) => ({ className: primary ? 'primary' : 'default' });
+  const setClass = ({ primary }: any) => ({ className: primary ? 'primary' : 'default' });
 
   it('transforms props', () => {
     const mapProps = sinon.spy(setClass);

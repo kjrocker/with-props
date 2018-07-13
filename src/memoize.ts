@@ -1,13 +1,13 @@
 import shallowEqual from './shallowEqual';
 
-const memoize = <P, R>(fn: (props?: P) => R) => {
+const memoize = <Fn extends (props?: any) => any>(fn: Fn): Fn => {
   if (fn.length === 0) {
     let returnValue = fn();
-    return () => returnValue;
+    return ((() => returnValue) as any) as Fn;
   } else {
-    let prevArg: P;
-    let returnValue: R;
-    return (arg: P) => {
+    let prevArg: any;
+    let returnValue: any;
+    return (((arg: any) => {
       if (shallowEqual(arg, prevArg)) {
         return returnValue;
       } else {
@@ -15,7 +15,7 @@ const memoize = <P, R>(fn: (props?: P) => R) => {
         prevArg = arg;
         return returnValue;
       }
-    };
+    }) as any) as Fn;
   }
 };
 
